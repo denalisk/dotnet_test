@@ -1,0 +1,16 @@
+﻿@model AjaxDemo.Models.Widget
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Here is the create Widget Page</h1>
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(m => m.Name)
+    @Html.TextBoxFor(m => m.Name)
+
+    @Html.LabelFor(m => m.Description)
+    @Html.TextBoxFor(m => m.Description)
+
+    <input type="submit" value="Create Widget" />
+}
