@@ -10,16 +10,11 @@ namespace AjaxDemo.Tests.Models
 {
     public class TestDbContext : AjaxDemoDbContext
     {
-        public TestDbContext(DbContextOptions<AjaxDemoDbContext> options)
-            : base(options)
-        {
-
-        }
-        public DbSet<Widget> Widgets { get; set; }
+        public override DbSet<Widget> Widgets { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AjaxDemoDbTest;integrated security = True");
+            options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AjaxDemoTest;integrated security = True");
         }
     }
 }

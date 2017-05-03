@@ -7,12 +7,13 @@ using Xunit;
 using Moq;
 using System.Linq;
 using AjaxDemo.Models.Repositories;
+using AjaxDemo.Tests.Models;
 
 namespace AjaxDemo.Tests.ControllerTests
 {
     public class HomeControllerTest
     {
-        EFWidgetRepository db = new EFWidgetRepository(new AjaxDemoDbContext(EFWidgetRepository.ContextOptions));
+        EFWidgetRepository db = new EFWidgetRepository(new TestDbContext());
 
         Mock<IWidgetRepository> mock = new Mock<IWidgetRepository>();
         private void DbSetup()
@@ -45,8 +46,8 @@ namespace AjaxDemo.Tests.ControllerTests
         public void Post_MethodAddsWidget_Test()
         {
             //Arrange
-            HomeController controller = new HomeController();
-            Widget testWidget = new Widget { Name = "Thing1", Description = "It's a thing what more do you want" };
+            HomeController controller = new HomeController(mock.Object);
+            Widget testWidget = new Widget { Name = "Sam", Description = "Unique object" };
 
             // Act
             controller.Create(testWidget);
@@ -61,12 +62,16 @@ namespace AjaxDemo.Tests.ControllerTests
             //arrange
             HomeController controller = new HomeController(db);
             Widget testWidget = new Widget();
-            testWidget.Description = "Test Widget";
-            testWidget.Name = "Widget";
+            testWidget.Description = "Melvin";
+            testWidget.Name = "Unique";
 
             //act
             controller.Create(testWidget);
             var collection = (controller.Index() as ViewResult).ViewData.Model as IEnumerable<Widget>;
+
+            Console.WriteLine("===========================");
+            Console.WriteLine("Current length of the collection is " + collection.Count());
+            Console.WriteLine("===========================");
 
             //assert
             Assert.Contains<Widget>(testWidget, collection);
